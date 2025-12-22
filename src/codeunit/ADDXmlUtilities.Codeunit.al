@@ -1,4 +1,4 @@
-codeunit 50100 "ADD_XmlUtilities"
+codeunit 50140 "ADD_XmlUtilities"
 {
     procedure GetXmlDocAndNsMgrFromInStr(ImportedXlfInStr: InStream; NsPrefix: Text; var XmlDoc: XmlDocument; var NsMgr: XmlNamespaceManager)
     var
