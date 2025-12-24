@@ -1,12 +1,13 @@
 table 50140 "ADD_TempAllFields"
 {
     Caption = 'Temp All Fields';
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(1; "Entry No."; Integer)
         {
+            AutoIncrement = true;
             Caption = 'Entry No.';
         }
         field(10; BigInteger1; BigInteger)

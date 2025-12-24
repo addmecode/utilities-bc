@@ -10,13 +10,13 @@ codeunit 50141 "ADD_Utilities"
         DateFormulaVal: DateFormula;
         BigIntVal: BigInteger;
         BoolVal: Boolean;
-        TextVal: Text;
         DateVal: Date;
         DateTimeVal: DateTime;
         DecVal: Decimal;
         DurVal: Duration;
         GuidVal: Guid;
         IntVal: Integer;
+        TextVal: Text;
         TimeVal: Time;
     begin
         case FldRef.Type of
@@ -85,13 +85,13 @@ codeunit 50141 "ADD_Utilities"
         DateFormulaVal: DateFormula;
         BigIntVal: BigInteger;
         BoolVal: Boolean;
-        TextVal: Text;
         DateVal: Date;
         DateTimeVal: DateTime;
         DecVal: Decimal;
         DurVal: Duration;
         GuidVal: Guid;
         IntVal: Integer;
+        TextVal: Text;
         TimeVal: Time;
     begin
         case FldRef.Type of
@@ -154,6 +154,4 @@ codeunit 50141 "ADD_Utilities"
                 Error('Unsupported field type %1 in field: (%2).', Format(FldRef.Type), FldRef.Name);
         end;
     end;
-
-
 }

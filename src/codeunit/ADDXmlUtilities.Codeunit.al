@@ -2,8 +2,8 @@ codeunit 50140 "ADD_XmlUtilities"
 {
     procedure GetXmlDocAndNsMgrFromInStr(ImportedXlfInStr: InStream; NsPrefix: Text; var XmlDoc: XmlDocument; var NsMgr: XmlNamespaceManager)
     var
-        Root: XmlElement;
         NsUri: Text;
+        Root: XmlElement;
     begin
         XmlDocument.ReadFrom(ImportedXlfInStr, XmlDoc);
         XmlDoc.GetRoot(Root);
@@ -35,7 +35,7 @@ codeunit 50140 "ADD_XmlUtilities"
     procedure CreateNewLineNode(var NewLineNode: XmlNode)
     var
         TypeHelper: Codeunit "Type Helper";
-        NewLineText: text;
+        NewLineText: Text;
     begin
         NewLineText := TypeHelper.CRLFSeparator() + '          ';
         NewLineNode := XmlText.Create(NewLineText).AsXmlNode();
@@ -44,8 +44,8 @@ codeunit 50140 "ADD_XmlUtilities"
     procedure DownloadXmlDoc(XmlDoc: XmlDocument; DownloadToFileName: Text)
     var
         TempBlob: Codeunit "Temp Blob";
-        OutStr: OutStream;
         InStr: InStream;
+        OutStr: OutStream;
     begin
         TempBlob.CreateOutStream(OutStr);
         XmlDoc.WriteTo(OutStr);
