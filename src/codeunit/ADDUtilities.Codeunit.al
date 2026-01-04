@@ -7,80 +7,21 @@ codeunit 50141 "ADD_Utilities"
 
     local procedure ValidateFieldFromText(var FldRef: FieldRef; FieldValue: Text)
     var
-        DateFormulaVal: DateFormula;
-        BigIntVal: BigInteger;
-        BoolVal: Boolean;
-        DateVal: Date;
-        DateTimeVal: DateTime;
-        DecVal: Decimal;
-        DurVal: Duration;
-        GuidVal: Guid;
-        IntVal: Integer;
-        TextVal: Text;
-        TimeVal: Time;
+        EvaluatedValue: Variant;
     begin
-        case FldRef.Type of
-            FldRef.Type::Boolean:
-                begin
-                    Evaluate(BoolVal, FieldValue);
-                    FldRef.Validate(BoolVal);
-                end;
-            FldRef.Type::Integer:
-                begin
-                    Evaluate(IntVal, FieldValue);
-                    FldRef.Validate(IntVal);
-                end;
-            FldRef.Type::BigInteger:
-                begin
-                    Evaluate(BigIntVal, FieldValue);
-                    FldRef.Validate(BigIntVal);
-                end;
-            FldRef.Type::Decimal:
-                begin
-                    Evaluate(DecVal, FieldValue);
-                    FldRef.Validate(DecVal);
-                end;
-            FldRef.Type::Date:
-                begin
-                    Evaluate(DateVal, FieldValue);
-                    FldRef.Validate(DateVal);
-                end;
-            FldRef.Type::DateTime:
-                begin
-                    Evaluate(DateTimeVal, FieldValue);
-                    FldRef.Validate(DateTimeVal);
-                end;
-            FldRef.Type::Time:
-                begin
-                    Evaluate(TimeVal, FieldValue);
-                    FldRef.Validate(TimeVal);
-                end;
-            FldRef.Type::Duration:
-                begin
-                    Evaluate(DurVal, FieldValue);
-                    FldRef.Validate(DurVal);
-                end;
-            FldRef.Type::Guid:
-                begin
-                    Evaluate(GuidVal, FieldValue);
-                    FldRef.Validate(GuidVal);
-                end;
-            FldRef.Type::DateFormula:
-                begin
-                    Evaluate(DateFormulaVal, FieldValue);
-                    FldRef.Validate(DateFormulaVal);
-                end;
-            FldRef.Type::Text, FldRef.Type::Code:
-                begin
-                    TextVal := FieldValue;
-                    FldRef.Validate(TextVal);
-                end;
-            else
-                Error('Unsupported field type %1 in field: (%2).', Format(FldRef.Type), FldRef.Name);
-        end;
+        this.EvaluateFieldValueFromText(FldRef, FieldValue, EvaluatedValue);
+        FldRef.Validate(EvaluatedValue);
     end;
 
     local procedure SetFieldFromText(var FldRef: FieldRef; FieldValue: Text)
+    var
+        EvaluatedValue: Variant;
+    begin
+        this.EvaluateFieldValueFromText(FldRef, FieldValue, EvaluatedValue);
+        FldRef.Value := EvaluatedValue;
+    end;
+
+    local procedure EvaluateFieldValueFromText(FldRef: FieldRef; FieldValue: Text; var EvaluatedValue: Variant)
     var
         DateFormulaVal: DateFormula;
         BigIntVal: BigInteger;
@@ -91,67 +32,75 @@ codeunit 50141 "ADD_Utilities"
         DurVal: Duration;
         GuidVal: Guid;
         IntVal: Integer;
-        TextVal: Text;
         TimeVal: Time;
+        UnsupportedFieldTypeErr: Label 'Unsupported field type %1 in field: (%2).', Comment = '%1 = Field type, %2 = Field name';
+        InvalidFieldValueErr: Label 'Cannot evaluate value %1 for field: (%2).', Comment = '%1 = Field value, %2 = Field name';
     begin
         case FldRef.Type of
             FldRef.Type::Boolean:
                 begin
-                    Evaluate(BoolVal, FieldValue);
-                    FldRef.Value := BoolVal;
+                    if not Evaluate(BoolVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := BoolVal;
                 end;
             FldRef.Type::Integer:
                 begin
-                    Evaluate(IntVal, FieldValue);
-                    FldRef.Value := IntVal;
+                    if not Evaluate(IntVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := IntVal;
                 end;
             FldRef.Type::BigInteger:
                 begin
-                    Evaluate(BigIntVal, FieldValue);
-                    FldRef.Value := BigIntVal;
+                    if not Evaluate(BigIntVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := BigIntVal;
                 end;
             FldRef.Type::Decimal:
                 begin
-                    Evaluate(DecVal, FieldValue);
-                    FldRef.Value := DecVal;
+                    if not Evaluate(DecVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := DecVal;
                 end;
             FldRef.Type::Date:
                 begin
-                    Evaluate(DateVal, FieldValue);
-                    FldRef.Value := DateVal;
+                    if not Evaluate(DateVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := DateVal;
                 end;
             FldRef.Type::DateTime:
                 begin
-                    Evaluate(DateTimeVal, FieldValue);
-                    FldRef.Value := DateTimeVal;
+                    if not Evaluate(DateTimeVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := DateTimeVal;
                 end;
             FldRef.Type::Time:
                 begin
-                    Evaluate(TimeVal, FieldValue);
-                    FldRef.Value := TimeVal;
+                    if not Evaluate(TimeVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := TimeVal;
                 end;
             FldRef.Type::Duration:
                 begin
-                    Evaluate(DurVal, FieldValue);
-                    FldRef.Value := DurVal;
+                    if not Evaluate(DurVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := DurVal;
                 end;
             FldRef.Type::Guid:
                 begin
-                    Evaluate(GuidVal, FieldValue);
-                    FldRef.Value := GuidVal;
+                    if not Evaluate(GuidVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := GuidVal;
                 end;
             FldRef.Type::DateFormula:
                 begin
-                    Evaluate(DateFormulaVal, FieldValue);
-                    FldRef.Value := DateFormulaVal;
+                    if not Evaluate(DateFormulaVal, FieldValue) then
+                        Error(InvalidFieldValueErr, FieldValue, FldRef.Name);
+                    EvaluatedValue := DateFormulaVal;
                 end;
             FldRef.Type::Text, FldRef.Type::Code:
-                begin
-                    TextVal := FieldValue;
-                    FldRef.Value := TextVal;
-                end;
+                EvaluatedValue := FieldValue;
             else
-                Error('Unsupported field type %1 in field: (%2).', Format(FldRef.Type), FldRef.Name);
+                Error(UnsupportedFieldTypeErr, Format(FldRef.Type), FldRef.Name);
         end;
     end;
 }
