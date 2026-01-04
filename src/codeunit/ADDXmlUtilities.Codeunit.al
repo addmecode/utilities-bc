@@ -19,11 +19,6 @@ codeunit 50140 "ADD_XmlUtilities"
         exit(Attr.Value());
     end;
 
-    procedure GetUpdProgrBatch(TotalRowsNumber: Integer; ProgrUpdPerc: Decimal): Integer
-    begin
-        exit(Round(TotalRowsNumber * ProgrUpdPerc, 1, '>'));
-    end;
-
     procedure GetElementAttribute(var NoteAttr: XmlAttribute; AttributeName: Text; NoteNode: XmlNode)
     var
         NoteAttributes: XmlAttributeCollection;
