@@ -1,4 +1,4 @@
-codeunit 50141 "Add Utilities"
+codeunit 50148 "Add Utilities"
 {
     /// <summary>
     /// Calculates the batch size based on total rows and update percentage.
