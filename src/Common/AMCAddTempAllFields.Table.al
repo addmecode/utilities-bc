@@ -1,4 +1,4 @@
-table 50149 "Add Temp All Fields"
+table 50149 "AMC Add Temp All Fields"
 {
     Caption = 'Temp All Fields';
     DataClassification = CustomerContent;

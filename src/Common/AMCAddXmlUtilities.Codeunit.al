@@ -1,4 +1,4 @@
-codeunit 50149 "Add Xml Utilities"
+codeunit 50149 "AMC Add Xml Utilities"
 {
     /// <summary>
     /// Reads an XML document from a stream and prepares a namespace manager.
