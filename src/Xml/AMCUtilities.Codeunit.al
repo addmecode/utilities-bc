@@ -1,4 +1,4 @@
-codeunit 50148 "AMC Add Utilities"
+codeunit 50148 "AMC Utilities"
 {
     /// <summary>
     /// Calculates the batch size based on total rows and update percentage.
